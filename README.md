@@ -29,7 +29,7 @@
   * `id` - a unique identifier
   * `timestamp` - a date from when the category was created
   * `name` - a string that is the name of the category
-  * `categoryID` - an id that corresponds to an existing category
+  * `categoryId` - an id that corresponds to an existing category
   * `price` - a number that is the total amount of $ in the category
 
 ##### Redux
@@ -38,8 +38,10 @@
 * create a reducer that will combine your `categories` reducer and `expenses` reducer
 
 ###### expenses reducer
-* create a category reducer in your your reducer directory
+* create a expense reducer in your your reducer directory
 * this reducer should support the following interactions
+  * `CATEGORY_CREATE` - create a category array to store expense objects
+  * `CATEGORY_DELETE` - delete the whole category key/value pair from the expense object
   * `EXPENSE_CREATE` - store an expense
   * `EXPENSE_UPDATE` - update an existing expense
   * `EXPENSE_DELETE` - delete an existing expense
@@ -58,9 +60,9 @@ App
   Provider
     BrowserRouter
       Route / Dashboard
-        CategoryForm -- for creating categorys
+        CategoryForm -- for creating categories
         [Category Item] -- list of Category items
-           CategoryForm  -- for updating categorys
+           CategoryForm  -- for updating categories
            ExpenseForm -- for creating expenses
            [ExpenseItem]  -- list of expense items
               ExpenseForm -- for updating an expense
