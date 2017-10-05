@@ -12,22 +12,24 @@ class DashboardContainer extends React.Component {
     this.props.categoryCreate({title: 'Toiletries', budget: 20});
   }
 
+
+
   render() {
+    console.log('this dot props', this.props);
+    console.log('this dot props cat', this.props.categories);
     return (
       <main className="main-content">
         <h2>Dashboard</h2>
         <CategoryForm
           buttonText="create"
           onComplete={this.props.categoryCreate} />
-
-        {this.props.categories.length ?
+        {this.props.categories ?
           <div>
             <h6>* Double-click category to edit</h6>
             {this.props.categories.map(item => {
               return <CategoryItem
                 key={item.id}
-                category={item}
-              />;
+                category={item} />;
             })}
           </div> :
           <h2>Add some categories</h2>
@@ -36,9 +38,11 @@ class DashboardContainer extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+let mapStateToProps = state => {
+  console.log('IN MAPSTATE', state);
   return {
-    categories: state,
+    categories: state.categories,
+  // expense: state.expenses,
   };
 };
 

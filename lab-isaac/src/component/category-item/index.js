@@ -1,7 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import CategoryForm from '../category-form';
+import ExpenseForm from '../expense-form';
 import {categoryUpdate, categoryDelete} from '../../action/category-actions';
+import {expenseCreate} from '../../action/expense-actions';
 
 class CategoryItem extends React.Component {
   constructor(props) {
@@ -9,7 +11,7 @@ class CategoryItem extends React.Component {
     this.state = {
       categoryEdit: false,
     };
-    this.toggleUpdate =this.toggleUpdate.bind(this);
+    this.toggleUpdate = this.toggleUpdate.bind(this);
   }
 
   toggleUpdate(e) {
@@ -19,6 +21,7 @@ class CategoryItem extends React.Component {
   }
 
   render() {
+    console.log('In CategoryItem', this.props);
     return(
       <div className="category-item">
         <h3 key={this.props.category.id} onDoubleClick={this.toggleUpdate}>{this.props.category.title}: ${this.props.category.budget} budget</h3>
@@ -30,22 +33,23 @@ class CategoryItem extends React.Component {
             category={this.props.category}/> :
           undefined
         }
+        <ExpenseForm 
+          categoryId ={this.props.category.id}
+          buttonText="add"
+          onComplete={this.props.expenseCreate} />
       </div>
     );
   }
 }
 
-let mapStateToProps = state => {
-  return {
-    category: state,
-  };
-};
+let mapStateToProps = () => ({});
 
 let mapDispatchToProps = (dispatch, getState) => {
   return{
     categoryUpdate: category => dispatch(categoryUpdate(category)),
     categoryDelete: category => dispatch(categoryDelete(category)),
+    expenseCreate: expense => dispatch(expenseCreate(expense)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(CategoryItem);
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryItem);
