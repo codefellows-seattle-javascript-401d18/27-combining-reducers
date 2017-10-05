@@ -1,5 +1,4 @@
 import React from 'react';
-import uuid from 'uuid/v4';
 
 class CategoryForm extends React.Component {
   constructor(props) {
