@@ -1,30 +1,54 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import ExpenseForm from '../expense-form';
-// import {expenseCreate} from '../../action/expense-actions';
+import {expenseDelete, expenseUpdate} from '../../action/expense-actions';
 
 class ExpenseItem extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            expenseEdit: false,
-        };
-        this.toggleUpdate = this.toggleUpdate.bind(this);
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      expenseEdit: false,
+    };
+    this.toggleUpdate = this.toggleUpdate.bind(this);
+  }
 
-    toggleUpdate(e) {
-        this.setState({
-            expenseEdit: !this.state.expenseEdit,
-        });
-    }
+  toggleUpdate(e) {
+    this.setState({
+      expenseEdit: !this.state.expenseEdit,
+    });
+  }
 
-    render() {
-        return(
-            <div className="expense-item">
-                <h3 key={this.props.expense.id}>{this.props.expense.name} at ${this.props.expense.price}</h3>
-            </div>
-        );
-    }
+  render() {
+    console.log(this.props);
+    return(
+      <section className="expense-item" id={this.props.expense.id}>
+        <button className="remove" onClick={() => this.props.expenseDelete(this.props.expense)}>Delete</button>
+        <button onClick={this.toggleUpdate}>Edit</button>
+        <h2>{this.props.expense.name}</h2>
+        <h3>Price: ${this.props.expense.price}</h3>
+
+        {this.state.expenseEdit ?
+          <ExpenseForm
+            buttonText="update"
+            toggle={this.toggleUpdate}
+            onComplete={this.props.expenseUpdate}
+            expense={this.props.expense} />
+          :
+          undefined
+        }
+      </section>
+    );
+  }
 }
 
-export default ExpenseItem;
+let mapStateToProps = () => ({});
+
+let mapDispatchToProps = (dispatch, getState) => {
+  return {
+    expenseDelete: expense => dispatch(expenseDelete(expense)),
+    expenseUpdate: expense => dispatch(expenseUpdate(expense)),
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseItem);
